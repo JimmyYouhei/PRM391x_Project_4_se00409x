@@ -23,6 +23,7 @@ public class VideoEntity {
 
     public VideoEntity() {
 
+
     }
 
     public VideoEntity(@NonNull String id, String title, String description, String imageURL) {
