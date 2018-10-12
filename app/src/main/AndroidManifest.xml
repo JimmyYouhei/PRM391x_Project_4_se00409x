@@ -22,7 +22,6 @@
         <activity android:name=".SignUp" />
         <activity android:name=".FirstVideoScreen" />
         <activity android:name=".ConnectorAndPlayer.VideoPlayer" />
-        <activity android:name=".VideoHistory" />
         <activity android:name=".SearchVideo"></activity>
     </application>
 

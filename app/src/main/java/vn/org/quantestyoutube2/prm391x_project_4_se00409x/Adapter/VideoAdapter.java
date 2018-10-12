@@ -17,6 +17,7 @@ import java.util.List;
 
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.ConnectorAndPlayer.VideoPlayer;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.VideoEntity;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.FirstVideoScreen;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.R;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.SignIn;
 
@@ -64,6 +65,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                 toVideoPlayer.putExtra(VIDEO_DESCRIPTION , video.getDescription());
                 toVideoPlayer.putExtra(VIDEO_IMAGE_URL , video.getImageURL());
                 toVideoPlayer.putExtra(SignIn.USERNAME_KEY , ((Activity)context).getIntent().getStringExtra(SignIn.USERNAME_KEY));
+                toVideoPlayer.putExtra(FirstVideoScreen.REQUEST_HISTORY , ((Activity)context).getIntent().getStringExtra(FirstVideoScreen.REQUEST_HISTORY));
 
                 ((Activity)context).startActivity(toVideoPlayer);
 

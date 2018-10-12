@@ -1,8 +1,10 @@
 package vn.org.quantestyoutube2.prm391x_project_4_se00409x.ConnectorAndPlayer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -16,7 +18,9 @@ import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Adapter.VideoAdapter;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.CommandAndInterface.Command;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Database.VideoRoom;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.VideoEntity;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.FirstVideoScreen;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.R;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.SignIn;
 
 public class VideoPlayer extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener  {
     private static final String TAG = "VideoPlayer";
@@ -73,11 +77,24 @@ public class VideoPlayer extends YouTubeBaseActivity implements YouTubePlayer.On
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
 
+        Toast.makeText(this, youTubeInitializationResult.toString(), Toast.LENGTH_LONG).show();
+
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (getIntent().getStringExtra(FirstVideoScreen.REQUEST_HISTORY) == null){
+
+            Intent backToFirstScreen = new Intent(this , FirstVideoScreen.class);
+            backToFirstScreen.putExtra(SignIn.USERNAME_KEY ,getIntent().getStringExtra(SignIn.USERNAME_KEY));
+            startActivity(backToFirstScreen);
+
+        } else if(getIntent().getStringExtra(FirstVideoScreen.REQUEST_HISTORY).equals(FirstVideoScreen.REQUEST_HISTORY)){
+            Intent backToFirstScreen = new Intent(this , FirstVideoScreen.class);
+            backToFirstScreen.putExtra(SignIn.USERNAME_KEY ,getIntent().getStringExtra(SignIn.USERNAME_KEY));
+            backToFirstScreen.putExtra(FirstVideoScreen.REQUEST_HISTORY , FirstVideoScreen.REQUEST_HISTORY);
+            startActivity(backToFirstScreen);
+        }
     }
 
     @Override
@@ -85,6 +102,5 @@ public class VideoPlayer extends YouTubeBaseActivity implements YouTubePlayer.On
         VideoRoom.destroyInstance();
         super.onDestroy();
     }
-
 
 }

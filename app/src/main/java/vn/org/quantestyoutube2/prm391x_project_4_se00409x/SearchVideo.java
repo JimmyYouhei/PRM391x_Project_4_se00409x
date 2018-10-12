@@ -57,8 +57,9 @@ public class SearchVideo extends AppCompatActivity {
                 break;
 
             case R.id.videoHistory:
-                Intent toVideoHistory = new Intent(this , VideoHistory.class);
+                Intent toVideoHistory = new Intent(this , FirstVideoScreen.class);
                 toVideoHistory.putExtra(SignIn.USERNAME_KEY , getIntent().getStringExtra(SignIn.USERNAME_KEY));
+                toVideoHistory.putExtra(FirstVideoScreen.REQUEST_HISTORY , FirstVideoScreen.REQUEST_HISTORY);
                 startActivity(toVideoHistory);
         }
         return super.onOptionsItemSelected(item);
