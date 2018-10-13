@@ -5,6 +5,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+// Class represent Youtube video
+
 @Entity
 public class VideoEntity {
 
@@ -21,6 +23,7 @@ public class VideoEntity {
     @ColumnInfo
     private String imageURL;
 
+    //Constructor
     public VideoEntity() {
 
 
@@ -33,6 +36,7 @@ public class VideoEntity {
         this.imageURL = imageURL;
     }
 
+    //Setter and getter
     public String getId() {
         return id;
     }
@@ -65,6 +69,7 @@ public class VideoEntity {
         this.imageURL = imageURL;
     }
 
+    // toString for testing
     @Override
     public String toString() {
         return "VideoEntity{" +

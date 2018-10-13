@@ -26,16 +26,18 @@ import vn.org.quantestyoutube2.prm391x_project_4_se00409x.R;
 public class YoutubeConnector {
     private static final String TAG = "YoutubeConnector";
 
+    // API key from google
     public static final String API_KEY = "AIzaSyATyXrHrTFjcKxx9XGRgz9tdKVo0RFWGyg";
 
+    // max Video
     private static final long MAX_VIDEO = 10;
 
-    private YouTube youTube;
     private YouTube.Search.List list;
 
     public YoutubeConnector(Context context){
 
-        youTube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
+        // build new youtube object
+        YouTube youTube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
             @Override
             public void initialize(HttpRequest request) throws IOException {
 
@@ -43,9 +45,13 @@ public class YoutubeConnector {
         }).setApplicationName(context.getString(R.string.app_name)).build();
 
         try {
+            // get only id and snippet part that is send back
             list = youTube.search().list("id,snippet");
+            // set API key
             list.setKey(API_KEY);
+            // only take video back not channel or playlist
             list.setType("video");
+            // field to get back : kind , id , title , description , thumbnail url
             list.setFields("items(id/kind,id/videoId,snippet/title,snippet/description,snippet/thumbnails/high/url)");
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,19 +59,26 @@ public class YoutubeConnector {
         }
     }
 
+    // make List that can be used for Adapter
     public List<VideoEntity> getListForAdapter (@Nullable String keywords) {
 
+        // if no key word mean see the video from Funix channel
         if (keywords == null){
+            // id of Funix channel
             list.setChannelId("UCkxo65nH5wfg7z1XxQ_Hb3Q");
         } else {
+            // setQ to search for the video with keyword
             list.setQ(keywords);
         }
 
+        // set max Result as above
         list.setMaxResults(MAX_VIDEO);
 
+        // get a List<SearchResult> back and if not null convert to List<VideoEntity> for Adapter
         try{
             SearchListResponse response = list.execute();
             List<SearchResult> results = response.getItems();
+
             List<VideoEntity> videoList = new ArrayList<>();
 
             if (results!= null){
@@ -80,14 +93,17 @@ public class YoutubeConnector {
 
     }
 
+    // method to convert as above . Use Iterator
     private static List<VideoEntity> getList(Iterator<SearchResult> iterator){
 
         List<VideoEntity> videoList = new ArrayList<>();
 
+        // no search result!!!!
         if (!iterator.hasNext()){
-            Log.d(TAG, "setList: no result????");
+
         }
 
+        // there are search result
         while (iterator.hasNext()){
             SearchResult result = iterator.next();
 

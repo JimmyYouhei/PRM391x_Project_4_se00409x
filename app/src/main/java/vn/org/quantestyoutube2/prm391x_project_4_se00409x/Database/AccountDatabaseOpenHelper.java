@@ -4,14 +4,17 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+// OpenHelper for account database
 public class AccountDatabaseOpenHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_FILE_NAME = "account.db";
     public static final int DATABASE_VERSION = 1;
 
+    // constructor
     public AccountDatabaseOpenHelper(Context context) {
         super(context, DATABASE_FILE_NAME , null, DATABASE_VERSION);
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {

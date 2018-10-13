@@ -10,6 +10,7 @@ import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.VideoEntity;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.SignIn;
 
 // each username have unique data base;
+// Room for video database
 @Database(entities = {VideoEntity.class} , version = 1)
 public abstract class VideoRoom extends RoomDatabase {
 
@@ -21,6 +22,7 @@ public abstract class VideoRoom extends RoomDatabase {
 
         if (instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext() , VideoRoom.class ,
+                    // the name will include username in its name so to make unique database for each username
                     "videos-history-"  +( (Activity)context).getIntent().getStringExtra(SignIn.USERNAME_KEY) + ".db")
                     // since the database will be small so MainThread is somewhat ok but I know it is best to move to other thread
                     .allowMainThreadQueries()

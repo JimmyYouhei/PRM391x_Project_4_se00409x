@@ -17,8 +17,12 @@ import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.VideoEntity;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.R;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.SignIn;
 
+
+// Central class to manage methods
+// the class is aim for easily read , maintain and reusable and only included methods that can be used in multi class not class specific methods
 public abstract class Command {
 
+    // check for whether username is exist in the database , return true if exist
     public static boolean isUsernameAlreadyExist(List<UserAccount> userAccountList, String username) {
         boolean result = false;
 
@@ -33,6 +37,8 @@ public abstract class Command {
         return result;
     }
 
+    // check for if the password of the username match with the database, return true if password match
+    // the method is here because it may be use when an Activity re-ask for password (eg: change password)
     public static boolean isPasswordCorrect(List<UserAccount> userAccountList,
                                             String username, String password) {
         boolean result = false;
@@ -48,24 +54,33 @@ public abstract class Command {
         return result;
     }
 
+    // method that is to setup toolbar.xml on the Activity that want to reuse this toolbar
+    // Required a placeholder that include toolbar.xml (eg: framelayout)
     public static void setupToolbar (Context context) {
 
+        //
         Toolbar toolbar = ((AppCompatActivity)context).findViewById(R.id.toolbarResuseable);
 
+        // make toolbar become Action bar so can easily create menu
         ((AppCompatActivity)context).setSupportActionBar(toolbar);
+        // disable generated title so to create custom welcome text
         ((AppCompatActivity)context).getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        // make welcome text according to the username
         Intent intentFromPreviousActivity = ((AppCompatActivity) context).getIntent();
         TextView txtWelcomeText = ((AppCompatActivity) context).findViewById(R.id.txtToolbarWelcome);
 
+        // setup Welcome Text
         txtWelcomeText.setText("Hi "+ intentFromPreviousActivity.getStringExtra(SignIn.USERNAME_KEY)+
                 ", Welcome to Funix!");
     }
 
+    // method to inflate the menu for activity
     public static void createMenu (Context context , Menu menu){
         ((Activity)context).getMenuInflater().inflate(R.menu.videolist_menu , menu);
     }
 
+    // simple setup RecyclerView that is not required the YoutubeConnector and/or running on new Thread
     public static void setupVideoRecyclerViewDefault(Context context ,  List<VideoEntity> videos , RecyclerView recyclerView){
 
         VideoAdapter videoAdapter = new VideoAdapter(context , videos);
@@ -73,6 +88,7 @@ public abstract class Command {
 
     }
 
+    //make object VideoEntity from intent data
     public static VideoEntity getVideoFromIntent (Intent intent){
 
         VideoEntity video= new VideoEntity();
@@ -85,6 +101,7 @@ public abstract class Command {
 
     }
 
+    // check whether the video is already exist in the database , return true if already exist
     public static boolean isVideoDuplicate(List<VideoEntity> videos , VideoEntity video){
 
         boolean result = false;
@@ -99,9 +116,11 @@ public abstract class Command {
 
     }
 
+    // method when click on the logout menu item
     public static void logOut (Context context) {
         Intent logOut = new Intent(context , SignIn.class);
         context.startActivity(logOut);
+        ((Activity)context).overridePendingTransition(R.animator.push_left_in , R.animator.push_left_out);
     }
 
 }

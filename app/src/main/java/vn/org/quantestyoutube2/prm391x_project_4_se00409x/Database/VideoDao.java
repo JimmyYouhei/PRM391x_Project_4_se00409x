@@ -8,6 +8,7 @@ import java.util.List;
 
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.VideoEntity;
 
+//Dao for video database
 @Dao
 public interface VideoDao {
 

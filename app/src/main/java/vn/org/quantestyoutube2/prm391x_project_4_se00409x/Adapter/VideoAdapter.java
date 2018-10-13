@@ -21,16 +21,18 @@ import vn.org.quantestyoutube2.prm391x_project_4_se00409x.FirstVideoScreen;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.R;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.SignIn;
 
+// Adapter class for Video's RecyclerView
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
+    // Constant key to store data in the intent
     public static final String VIDEO_ID = "video , id";
     public static final String VIDEO_TITLE = "video , title";
     public static final String VIDEO_DESCRIPTION = "video , description";
     public static final String VIDEO_IMAGE_URL = "video , image , url";
-    public static final int TO_PLAY_REQUEST_CODE = 10010;
 
     List<VideoEntity> videoList;
     private Context context;
 
+    // Constructor
     public VideoAdapter(Context context , List<VideoEntity> videoEntities) {
         this.videoList = videoEntities;
         this.context = context;
@@ -48,27 +50,36 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+        // make VideoEntity object based on the View
         final VideoEntity video = videoList.get(position);
 
+        // setup the video 's title , description and Image thumbnail
         holder.txtVideoTitle.setText(video.getTitle());
         holder.txtVideoSummary.setText(video.getDescription());
 
+        // use Picasso to load video's Thumbnail
         Picasso.get().load(video.getImageURL()).into(holder.videoImage);
 
+        // case click on the View will play the video
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toVideoPlayer = new Intent(context , VideoPlayer.class);
 
+                // put video information into the intent
                 toVideoPlayer.putExtra(VIDEO_ID , video.getId());
                 toVideoPlayer.putExtra(VIDEO_TITLE , video.getTitle());
                 toVideoPlayer.putExtra(VIDEO_DESCRIPTION , video.getDescription());
                 toVideoPlayer.putExtra(VIDEO_IMAGE_URL , video.getImageURL());
+                // put information about the username
                 toVideoPlayer.putExtra(SignIn.USERNAME_KEY , ((Activity)context).getIntent().getStringExtra(SignIn.USERNAME_KEY));
+                // put the REQUEST_HISTORY to the intent to know from channel or from history
+                // from channel will be null
+                // from history will not be null
                 toVideoPlayer.putExtra(FirstVideoScreen.REQUEST_HISTORY , ((Activity)context).getIntent().getStringExtra(FirstVideoScreen.REQUEST_HISTORY));
 
-                ((Activity)context).startActivity(toVideoPlayer);
-
+                context.startActivity(toVideoPlayer);
+                ((Activity)context).overridePendingTransition(R.animator.push_left_in , R.animator.push_left_out);
             }
         });
 

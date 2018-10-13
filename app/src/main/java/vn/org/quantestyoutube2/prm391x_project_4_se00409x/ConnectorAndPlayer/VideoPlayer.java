@@ -24,11 +24,13 @@ import vn.org.quantestyoutube2.prm391x_project_4_se00409x.SignIn;
 
 public class VideoPlayer extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener  {
     private static final String TAG = "VideoPlayer";
-    public static final int RESULT_TO_BACK = 10;
+
 
     private YouTubePlayerView youTubePlayerView;
     private TextView txtTilte;
     private TextView txtDescription;
+
+    //Room and List to manage the video history database
     private VideoRoom videoRoom;
     private List<VideoEntity> videoHistoryList = new ArrayList<>();
 
@@ -37,43 +39,49 @@ public class VideoPlayer extends YouTubeBaseActivity implements YouTubePlayer.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
 
+        // Initialize or acquired the database
         videoRoom = VideoRoom.getInstance(this);
+        //if acquired transfer all video entity from database to the List
         if (videoRoom.videoDao().countVideos() != 0) {
             videoHistoryList = videoRoom.videoDao().getVideoDatabase();
         }
 
 
+        // tied View to its place in xml
         youTubePlayerView = findViewById(R.id.videoPlayer);
 
         txtTilte = findViewById(R.id.txtTitlePlayer);
         txtDescription = findViewById(R.id.txtDescriptionPlayer);
+        // set Text of video's title and description
         txtTilte.setText(getIntent().getStringExtra(VideoAdapter.VIDEO_TITLE));
         txtDescription.setText(getIntent().getStringExtra(VideoAdapter.VIDEO_DESCRIPTION));
 
+        // play video
         youTubePlayerView.initialize(YoutubeConnector.API_KEY , this);
 
 
     }
 
+    // case success
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean isRestored) {
 
-
+        //case video is not restored meaning new playing
         if(!isRestored){
+            // load and autoplay video
             youTubePlayer.loadVideo(getIntent().getStringExtra(VideoAdapter.VIDEO_ID) , 0);
+            // make Video Entity of the playing video object from the intent data
             VideoEntity videoPlaying = Command.getVideoFromIntent(getIntent());
 
+            // check whether  the video already exist in the database , if not exist , will add to the database
             if (!Command.isVideoDuplicate(videoHistoryList , videoPlaying)){
                 videoRoom.videoDao().insert(videoPlaying);
             }
-
-            Log.d(TAG, "onInitializationSuccess: " + videoRoom.videoDao().countVideos());
         }
-
-
 
     }
 
+    // case failure
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
 
@@ -81,22 +89,28 @@ public class VideoPlayer extends YouTubeBaseActivity implements YouTubePlayer.On
 
     }
 
+    // override Hard back button get intent data to know where the intent come from
     @Override
     public void onBackPressed() {
+        // case come from the channel will come back to channel ans preserve the username data
         if (getIntent().getStringExtra(FirstVideoScreen.REQUEST_HISTORY) == null){
 
             Intent backToFirstScreen = new Intent(this , FirstVideoScreen.class);
             backToFirstScreen.putExtra(SignIn.USERNAME_KEY ,getIntent().getStringExtra(SignIn.USERNAME_KEY));
             startActivity(backToFirstScreen);
+            overridePendingTransition(R.animator.push_left_in , R.animator.push_left_out);
 
+            //case from the history mode will come back to the history and preserve username and REQUEST_HISTORY
         } else if(getIntent().getStringExtra(FirstVideoScreen.REQUEST_HISTORY).equals(FirstVideoScreen.REQUEST_HISTORY)){
             Intent backToFirstScreen = new Intent(this , FirstVideoScreen.class);
             backToFirstScreen.putExtra(SignIn.USERNAME_KEY ,getIntent().getStringExtra(SignIn.USERNAME_KEY));
             backToFirstScreen.putExtra(FirstVideoScreen.REQUEST_HISTORY , FirstVideoScreen.REQUEST_HISTORY);
             startActivity(backToFirstScreen);
+            overridePendingTransition(R.animator.push_left_in , R.animator.push_left_out);
         }
     }
 
+    // avoid database leak
     @Override
     protected void onDestroy() {
         VideoRoom.destroyInstance();

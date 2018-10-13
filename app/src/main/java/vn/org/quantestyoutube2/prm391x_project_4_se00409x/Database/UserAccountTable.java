@@ -1,5 +1,6 @@
 package vn.org.quantestyoutube2.prm391x_project_4_se00409x.Database;
 
+// class for SQLite account database
 public class UserAccountTable {
     public static final String TABLE_NAME = "userAccount";
     public static final String COLUMN_NAME = "username";

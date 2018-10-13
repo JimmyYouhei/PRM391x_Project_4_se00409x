@@ -12,36 +12,42 @@ import java.util.List;
 
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.UserAccount;
 
+// class that include and manage account database
 public class DatabaseSource {
 
     private Context mContext;
     private SQLiteDatabase mAccountDatabase;
     SQLiteOpenHelper mOpenHelper;
 
+    // contructor
     public DatabaseSource (Context context){
         mContext = context;
         mOpenHelper = new AccountDatabaseOpenHelper(mContext);
         mAccountDatabase = mOpenHelper.getWritableDatabase();
     }
 
+    // initialize or acquire database
     public void open(){
         mAccountDatabase = mOpenHelper.getWritableDatabase();
     }
 
+    // close to avoid leak
     public void close() {
         mOpenHelper.close();
     }
 
-    public UserAccount insert(UserAccount account){
+    // insert method for database
+    public void insert(UserAccount account){
         ContentValues values = account.toValues();
         mAccountDatabase.insert(UserAccountTable.TABLE_NAME , null , values);
-        return account;
     }
 
+    // count item method in database
     public long countAccount(){
         return DatabaseUtils.queryNumEntries(mAccountDatabase , UserAccountTable.TABLE_NAME);
     }
 
+    // method to transfer all account to a List using Cursor
     public List<UserAccount> getAllAccount (){
         List<UserAccount> userAccountList = new ArrayList<>();
 
