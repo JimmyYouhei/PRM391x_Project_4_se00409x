@@ -28,6 +28,7 @@ public class SignIn extends AppCompatActivity {
     private EditText txtPassword;
     private TextView btnToSignUp;
     private Button btnSignIn;
+
     
 
     // DatabaseSource object include SQLite and manage it
