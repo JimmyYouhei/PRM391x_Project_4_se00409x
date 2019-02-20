@@ -1,8 +1,7 @@
-package vn.org.quantestyoutube2.prm391x_project_4_se00409x.ConnectorAndPlayer;
+package vn.org.quantestyoutube2.prm391x_project_4_se00409x.connector_and_player;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,14 +12,16 @@ import com.google.android.youtube.player.YouTubePlayerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Adapter.VideoAdapter;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.CommandAndInterface.Command;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Database.VideoRoom;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.VideoEntity;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.FirstVideoScreen;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.R;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.SignIn;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.adapter.VideoAdapter;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.command_and_interface.Command;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.database.VideoRoom;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.entity.VideoEntity;
 
 public class VideoPlayer extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener  {
     private static final String TAG = "VideoPlayer";
@@ -34,6 +35,9 @@ public class VideoPlayer extends YouTubeBaseActivity implements YouTubePlayer.On
     private VideoRoom videoRoom;
     private List<VideoEntity> videoHistoryList = new ArrayList<>();
 
+    // Executor for background task
+    Executor executor = Executors.newSingleThreadExecutor();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +46,20 @@ public class VideoPlayer extends YouTubeBaseActivity implements YouTubePlayer.On
         // Initialize or acquired the database
         videoRoom = VideoRoom.getInstance(this);
         //if acquired transfer all video entity from database to the List
-        if (videoRoom.videoDao().countVideos() != 0) {
-            videoHistoryList = videoRoom.videoDao().getVideoDatabase();
-        }
+
+        // run on background task for Room library
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+
+                if (videoRoom.videoDao().countVideos() != 0) {
+                    videoHistoryList = videoRoom.videoDao().getVideoDatabase();
+                }
+
+            }
+        });
+
+
 
 
         // tied View to its place in xml
@@ -71,12 +86,21 @@ public class VideoPlayer extends YouTubeBaseActivity implements YouTubePlayer.On
             // load and autoplay video
             youTubePlayer.loadVideo(getIntent().getStringExtra(VideoAdapter.VIDEO_ID) , 0);
             // make Video Entity of the playing video object from the intent data
-            VideoEntity videoPlaying = Command.getVideoFromIntent(getIntent());
+
 
             // check whether  the video already exist in the database , if not exist , will add to the database
-            if (!Command.isVideoDuplicate(videoHistoryList , videoPlaying)){
-                videoRoom.videoDao().insert(videoPlaying);
-            }
+            // add executor to run on the background for Room Library
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    VideoEntity videoPlaying = Command.getVideoFromIntent(getIntent());
+
+                    if (!Command.isVideoDuplicate(videoHistoryList , videoPlaying)){
+                        videoRoom.videoDao().insert(videoPlaying);
+                    }
+                }
+            });
+
         }
 
     }

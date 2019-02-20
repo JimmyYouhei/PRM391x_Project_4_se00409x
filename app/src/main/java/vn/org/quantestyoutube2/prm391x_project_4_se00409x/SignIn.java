@@ -13,9 +13,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.CommandAndInterface.Command;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Database.DatabaseSource;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.UserAccount;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.command_and_interface.Command;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.database.DatabaseSource;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.entity.UserAccount;
 
 // the Sign In activity
 public class SignIn extends AppCompatActivity {

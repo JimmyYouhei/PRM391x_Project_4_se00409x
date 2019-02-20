@@ -9,9 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.CommandAndInterface.Command;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Database.DatabaseSource;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.UserAccount;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.command_and_interface.Command;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.database.DatabaseSource;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.entity.UserAccount;
 
 public class SignUp extends AppCompatActivity {
     private static final String TAG = "SignUp";

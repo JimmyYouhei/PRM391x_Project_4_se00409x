@@ -21,7 +21,7 @@
         </activity>
         <activity android:name=".SignUp" />
         <activity android:name=".FirstVideoScreen" />
-        <activity android:name=".ConnectorAndPlayer.VideoPlayer" />
+        <activity android:name=".connector_and_player.VideoPlayer" />
         <activity android:name=".SearchVideo"></activity>
     </application>
 

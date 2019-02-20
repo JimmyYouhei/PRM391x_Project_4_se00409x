@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.CommandAndInterface.Command;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.CommandAndInterface.SetupRecyclerView;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.command_and_interface.Command;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.command_and_interface.SetupRecyclerView;
 
 // Activity to help to search video with keywords
 public class SearchVideo extends AppCompatActivity {

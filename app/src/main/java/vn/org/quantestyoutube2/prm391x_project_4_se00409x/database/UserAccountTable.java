@@ -1,4 +1,4 @@
-package vn.org.quantestyoutube2.prm391x_project_4_se00409x.Database;
+package vn.org.quantestyoutube2.prm391x_project_4_se00409x.database;
 
 // class for SQLite account database
 public class UserAccountTable {

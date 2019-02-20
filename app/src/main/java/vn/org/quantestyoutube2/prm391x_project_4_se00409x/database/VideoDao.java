@@ -1,4 +1,4 @@
-package vn.org.quantestyoutube2.prm391x_project_4_se00409x.Database;
+package vn.org.quantestyoutube2.prm391x_project_4_se00409x.database;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
@@ -6,7 +6,7 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.VideoEntity;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.entity.VideoEntity;
 
 //Dao for video database
 @Dao

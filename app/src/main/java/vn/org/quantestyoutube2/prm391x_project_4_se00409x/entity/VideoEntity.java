@@ -1,4 +1,4 @@
-package vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity;
+package vn.org.quantestyoutube2.prm391x_project_4_se00409x.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

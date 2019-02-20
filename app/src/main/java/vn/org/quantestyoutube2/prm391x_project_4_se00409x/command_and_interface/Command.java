@@ -1,21 +1,20 @@
-package vn.org.quantestyoutube2.prm391x_project_4_se00409x.CommandAndInterface;
+package vn.org.quantestyoutube2.prm391x_project_4_se00409x.command_and_interface;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.TextView;
 
 import java.util.List;
 
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Adapter.VideoAdapter;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.UserAccount;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.VideoEntity;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.R;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.SignIn;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.adapter.VideoAdapter;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.entity.UserAccount;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.entity.VideoEntity;
 
 
 // Central class to manage methods
@@ -78,14 +77,6 @@ public abstract class Command {
     // method to inflate the menu for activity
     public static void createMenu (Context context , Menu menu){
         ((Activity)context).getMenuInflater().inflate(R.menu.videolist_menu , menu);
-    }
-
-    // simple setup RecyclerView that is not required the YoutubeConnector and/or running on new Thread
-    public static void setupVideoRecyclerViewDefault(Context context ,  List<VideoEntity> videos , RecyclerView recyclerView){
-
-        VideoAdapter videoAdapter = new VideoAdapter(context , videos);
-        recyclerView.setAdapter(videoAdapter);
-
     }
 
     //make object VideoEntity from intent data

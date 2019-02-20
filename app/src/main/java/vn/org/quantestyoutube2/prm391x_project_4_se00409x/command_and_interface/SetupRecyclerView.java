@@ -1,13 +1,13 @@
-package vn.org.quantestyoutube2.prm391x_project_4_se00409x.CommandAndInterface;
+package vn.org.quantestyoutube2.prm391x_project_4_se00409x.command_and_interface;
 
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Adapter.VideoAdapter;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.ConnectorAndPlayer.YoutubeConnector;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.VideoEntity;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.adapter.VideoAdapter;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.connector_and_player.YoutubeConnector;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.entity.VideoEntity;
 
 // AsyncTask to play on other thread (not main thread)
 // a Combine of new Thread () and Handler which is easier to use and is much better in the term of reusable code

@@ -1,4 +1,4 @@
-package vn.org.quantestyoutube2.prm391x_project_4_se00409x.ConnectorAndPlayer;
+package vn.org.quantestyoutube2.prm391x_project_4_se00409x.connector_and_player;
 
 import android.content.Context;
 import android.util.Log;
@@ -20,8 +20,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.VideoEntity;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.R;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.entity.VideoEntity;
 
 public class YoutubeConnector {
     private static final String TAG = "YoutubeConnector";

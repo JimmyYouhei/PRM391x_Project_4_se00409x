@@ -1,5 +1,6 @@
 package vn.org.quantestyoutube2.prm391x_project_4_se00409x;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,13 +9,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.CommandAndInterface.Command;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.CommandAndInterface.SetupRecyclerView;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Database.VideoRoom;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.VideoEntity;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.adapter.VideoAdapter;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.command_and_interface.Command;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.command_and_interface.SetupRecyclerView;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.database.VideoRoom;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.entity.VideoEntity;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.event_for_eventbus.ContextListRecyclerView;
 
 
 public class FirstVideoScreen extends AppCompatActivity {
@@ -25,6 +34,8 @@ public class FirstVideoScreen extends AppCompatActivity {
     private VideoRoom videoRoom;
     private List<VideoEntity> videoHistoryList = new ArrayList<>();
 
+    // Executor for background task
+    private Executor executor = Executors.newSingleThreadExecutor();
 
     private RecyclerView recyclerView;
 
@@ -53,15 +64,28 @@ public class FirstVideoScreen extends AppCompatActivity {
 
 
             // if database already exist transfer all to the List
-            if (videoRoom.videoDao().countVideos() > 0){
-                videoHistoryList = videoRoom.videoDao().getVideoDatabase();
-            }
 
-            // setup RecyclerView according to the List
-            Command.setupVideoRecyclerViewDefault(this , videoHistoryList , recyclerView);
+            // background task for setup RecyclerView
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    // check for history of video, if any will retrieve to a List to setup for the RecyclerView
+                    if (videoRoom.videoDao().countVideos() > 0){
+                        videoHistoryList = videoRoom.videoDao().getVideoDatabase();
+                    }
 
+                    // wrap the 3 class for EventBus usage
+                    ContextListRecyclerView wrapper = new ContextListRecyclerView(FirstVideoScreen.this, videoHistoryList , recyclerView);
+
+                    // use EventBus to tranfer to main thread (also called UI thread ) to setup recycler view
+                    EventBus.getDefault().post(wrapper);
+                }
+
+
+            });
         }
-
+        // register the method
+        EventBus.getDefault().register(this);
     }
 
     // create the 3 dot Menu
@@ -108,6 +132,7 @@ public class FirstVideoScreen extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         VideoRoom.destroyInstance();
+        EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
 
@@ -122,4 +147,18 @@ public class FirstVideoScreen extends AppCompatActivity {
             this.recreate();
         }
     }
+
+    // Setup the RecyclerView on the Main Thread using the EventBus
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void setupVideoRecyclerViewDefault(ContextListRecyclerView wrapper){
+
+        Context context = wrapper.getContext();
+        List<VideoEntity> videos = wrapper.getVideoEntityList();
+        RecyclerView recyclerView = wrapper.getRecyclerView();
+
+        VideoAdapter videoAdapter = new VideoAdapter(context , videos);
+        recyclerView.setAdapter(videoAdapter);
+
+    }
+
 }

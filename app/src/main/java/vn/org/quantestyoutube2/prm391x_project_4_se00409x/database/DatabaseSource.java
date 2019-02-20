@@ -1,4 +1,4 @@
-package vn.org.quantestyoutube2.prm391x_project_4_se00409x.Database;
+package vn.org.quantestyoutube2.prm391x_project_4_se00409x.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.UserAccount;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.entity.UserAccount;
 
 // class that include and manage account database
 public class DatabaseSource {

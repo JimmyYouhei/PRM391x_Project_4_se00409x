@@ -1,4 +1,4 @@
-package vn.org.quantestyoutube2.prm391x_project_4_se00409x.Adapter;
+package vn.org.quantestyoutube2.prm391x_project_4_se00409x.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,11 +15,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.ConnectorAndPlayer.VideoPlayer;
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity.VideoEntity;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.FirstVideoScreen;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.R;
 import vn.org.quantestyoutube2.prm391x_project_4_se00409x.SignIn;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.connector_and_player.VideoPlayer;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.entity.VideoEntity;
 
 // Adapter class for Video's RecyclerView
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {

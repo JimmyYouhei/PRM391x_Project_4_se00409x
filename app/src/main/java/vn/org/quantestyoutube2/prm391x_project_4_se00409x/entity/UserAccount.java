@@ -1,8 +1,8 @@
-package vn.org.quantestyoutube2.prm391x_project_4_se00409x.Entity;
+package vn.org.quantestyoutube2.prm391x_project_4_se00409x.entity;
 
 import android.content.ContentValues;
 
-import vn.org.quantestyoutube2.prm391x_project_4_se00409x.Database.UserAccountTable;
+import vn.org.quantestyoutube2.prm391x_project_4_se00409x.database.UserAccountTable;
 
 // class to represent User Account
 

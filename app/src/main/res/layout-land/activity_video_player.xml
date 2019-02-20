@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ConnectorAndPlayer.VideoPlayer">
+    tools:context=".connector_and_player.VideoPlayer">
 
     <com.google.android.youtube.player.YouTubePlayerView
         android:id="@+id/videoPlayer"
