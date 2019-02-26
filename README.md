@@ -47,8 +47,21 @@ However the Room mechanical is encapsulated so it is not quite easy to understan
 Sometime when press the hard back button during VideoPlayer activity I notice that Android Studio complain the there was Intent receiver leak. 
 I cannot find the source so it may come from the Youtube API . However I did not see any real error that it caused 
 
-## Known Issues
-	if the instant run features of Android Studio is active the app will faild to build 
-	So please disable the instant run
-  
+## Known issues
+if the instant run features of Android Studio is active the app will faild to build 
+So please disable the instant run
+
+## Special note
+-	This project is the first project that I used 3rd party API ([the Youtube API](https://developers.google.com/youtube/android/player/) ). Complex as it is but much quicker to code everything from scratch and with many features 
+-	In this project It is funny but I did code both SQLite normally and use room persistence library for comparison and I can easily understand why google recommend Room by the time that app was being made. It is quick , convenience , less code and less class . But I ran into a trouble at first that I did not make any primary key for VideoEntity class. But it can be solved very quickly 
+-	My SignUp activity do check for common error when making new user. So please try ahead
+-	This project also use transition . although minor but just for learning 
+-	I did reference code [from others](https://github.com/abhi5658/search-youtube) for Youtube Connector part. I had to replicate all of his code again line by line first into a new blank project to understand his code and how to build connector. His code is fine but it has serious flaws in the YoutubeConnector class that make me unable to connect to my API key which is the part SHA1 and Package name and X-Android . I resolved that and build a lot more of my code into my own class to make it run as I intent
+-	The I also use 2 type of background thread for this project: the Asynctask and Executor with [EventBus](http://greenrobot.org/eventbus/) 
+-	The project also use [Picasso library](https://square.github.io/picasso/) to load the image of Youtube Video. It makes life easier to load just an image compare to many step coding from scratch.
+-	Also it is strange that by the time the project was being made ,  nothing is wrong. But when I revisited and move Room library to the background Thread , also the time when the API 28 was finally released . It gave strange warning that I was mixing both version 27.1.1 and 27.1.0 for some implementation . As a result I had to included all those implementation and specifies the version 27.1.1 to resolve the error
+-	I also make a special class: Command to store methods that I can reuse in other class. I wish to make it an Interface but the minimum API 17 did not allow me to do so as it is unsupported . As a result I made it an abstract class and all method static in order to avoid the class being Initialize by mistake  
+
+## License
+Free Software that follow the MIT License . More detail can be see here
   
