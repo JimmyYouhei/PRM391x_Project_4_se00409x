@@ -63,5 +63,5 @@ So please disable the instant run
 -	I also make a special class: Command to store methods that I can reuse in other class. I wish to make it an Interface but the minimum API 17 did not allow me to do so as it is unsupported . As a result I made it an abstract class and all method static in order to avoid the class being Initialize by mistake  
 
 ## License
-Free Software that follow the MIT License . More detail can be see here
+Free Software that follow the MIT License . More detail can be see [here](https://github.com/JimmyYouhei/YoutubeApp/new/master)
   
