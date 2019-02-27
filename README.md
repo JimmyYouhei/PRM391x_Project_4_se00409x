@@ -7,7 +7,7 @@ This is an Youtube App with simple Sign In and Sign Up Screen for my learning pu
 - min SDK: 17
 
 ## How to install
-- If you have an Android OS phone please go to [google app store]() to install  
+- If you have an Android OS phone please go to [google app store](https://play.google.com/store/apps/details?id=vn.org.quantestyoutube2.prm391x_project_4_se00409x) to install  
 - If you want to work with the source code then please open your Android Studio and use _new_ -> _Project From Version Control_ -> _Git_ and paste _https://github.com/JimmyYouhei/YoutubeApp.git_
 
 ## How to use 
