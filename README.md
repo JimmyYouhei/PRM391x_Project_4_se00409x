@@ -38,7 +38,7 @@ Sometimes when pressing the hard back button during “VideoPlayer” activity I
 
 ## Known issues
 -	If the instant run features of Android Studio is active the app will fail to build So please disable the instant run
--	No landscape layout is designed , It will be less nice when using landscape compare to portrait layout. However, I did practice making landscape layout on my calculator project so I don’t think it is needed anymore  
+-	No landscape layout is designed , It will be less nice when using landscape compare to portrait layout. However, I did practice making landscape layout on [my calculator project](https://github.com/JimmyYouhei/Calculator) so I don’t think it is needed anymore  
 
 
 ## Special note
